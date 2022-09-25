@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\post.html" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 

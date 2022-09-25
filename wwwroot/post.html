@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Post Test</title>
+    <script type="text/javascript">
+        function handleSubmit(e) {
+            e.preventDefault();
+            const data = new FormData(document.getElementById("stuff-form"));
+            const res = {
+                "Id": Math.floor(Math.random() * 10),
+                "Name": data.get("Name"),
+                "Description": data.get("Description")
+            }
+            const payload = {
+                method: "POST",
+                headers: { "Content-type": "application/json" },
+                body: JSON.stringify(res)
+            }
+            fetch("https://localhost:5001/stuff", payload)
+                .then(async (res) => { document.getElementById("output-area").textContent = await res.text() });
+        }
+    </script>
+</head>
+<body>
+    <h1>Post Test</h1>
+    <form id="stuff-form" onsubmit="handleSubmit(event)">
+        <label for="name-entry">Name</label>
+        <input id="name-entry" name="Name" type="text" />
+        <label for="desc-entry">Description</label>
+        <input id="desc-entry" name="Description" type="text" />
+        <button>Submit</button>
+    </form>
+    <label for="output-area">Output:</label>
+    <span id="output-area"></span>
+</body>
+</html>
