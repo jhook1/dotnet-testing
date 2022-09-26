@@ -4,12 +4,23 @@ using System.Text;
 using System.Net.Mime;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using dotnet_testing;
 
 var builder = WebApplication.CreateBuilder();
+builder.Services.AddCors((options) =>
+{
+    options.AddPolicy("AllowLocalHostPolicy", (policy) =>
+    {
+        policy.WithOrigins("http://localhost:3000");
+        policy.WithHeaders("content-type");
+    });
+});
+
 var app = builder.Build();
 
 app.UseStaticFiles();
+app.UseCors("AllowLocalHostPolicy");
 
 app.MapGet("/stuff", () => { Console.WriteLine("Get!"); return "Hello World!"; });
 app.MapGet("/stuff/{id}", (int id) => $"Stuff #: {id}");
