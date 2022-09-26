@@ -35,6 +35,11 @@ app.MapGet("/stuff/form", (HttpContext context) =>
     context.Response.ContentLength = Encoding.UTF8.GetByteCount(htmlText);
     context.Response.WriteAsync(htmlText);
 });
+app.MapGet("/stuff/form/redirect", (HttpContext context) =>
+{
+    Console.WriteLine("Redirect!");
+    context.Response.Redirect("http://localhost:3000");
+});
 
 app.MapFallbackToFile("index.html");
 
