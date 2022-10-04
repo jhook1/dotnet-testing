@@ -45,7 +45,16 @@
                 "start",
                 "--prefix",
                 "client"
-            ]
+            ],
+            "isBackground": true
+        },
+        {
+            "label": "debug",
+            "dependsOn": ["build","start"]
+        },
+        {
+            "label": "launch",
+            "dependsOn": ["watch","start"]
         }
     ]
 }
