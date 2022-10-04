@@ -2,26 +2,35 @@ import logo from './logo.svg';
 import './App.css';
 import { useState } from 'react';
 
-function ApiBuilder(path,data) {
+function apiBuilder(path, state, data) {
+  const apiUrl = "https://localhost:5001"
+
   function view() {
-    fetch(`${path}/${data.id}`)
+    fetch(`${apiUrl}${path}/${data.id}`)
       .then(async (res) => {
-        return await res.text();
+        state.setBuilder(await res.text());
       });
   }
 
   function list() {
-    fetch(`${path}`)
+    console.log("list");
+    fetch(`${apiUrl}${path}`)
       .then(async (res) => {
-        return await res.text();
+        state.setBuilder(await res.text());
       });
   }
 
   function create() {
-    fetch(`${path}`, { method: "POST", body: data })
+    fetch(`${apiUrl}${path}`, { method: "POST", body: data })
       .then(async (res) => {
-        return await res.text();
+        state.setBuilder(await res.text());
       });
+  }
+
+  return {
+    view,
+    list,
+    create
   }
 }
 
@@ -49,8 +58,12 @@ function App() {
       .catch((err)=>console.log(err));
   };
 
-  const handleApiBuilder = ()=>{
-    return ApiBuilder("/other/stuff/").list()
+  const handleApiBuilder = (e) => {
+    e.preventDefault();
+    //const resp = 
+    apiBuilder("/other/stuff/",{builder,setBuilder}).list();
+    //console.log(resp);
+    //setBuilder(resp);
   }
 
   return (
@@ -64,7 +77,7 @@ function App() {
         </form>
         <span>Response: { dispResp }</span>
         <br/>
-        <form onSubmit={ApiBuilder("/other/stuff/").list}>
+        <form onSubmit={(e)=>handleApiBuilder(e)}>
           <button>API Builder</button>
         </form>
         <span>Builder: {builder}</span>
