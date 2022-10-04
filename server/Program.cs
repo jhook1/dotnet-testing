@@ -40,6 +40,9 @@ app.MapGet("/stuff/form/redirect", (HttpContext context) =>
     Console.WriteLine("Redirect!");
     context.Response.Redirect("http://localhost:3000");
 });
+app.MapGet("/other/stuff/",()=>{
+    return "Other stuff";
+});
 
 app.MapFallbackToFile("index.html");
 
